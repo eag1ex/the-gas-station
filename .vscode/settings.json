@@ -1,0 +1,31 @@
+{
+  // Enable ESLint extension support
+  "eslint.enable": true,
+
+  "eslint.options": {
+    "overrideConfigFile": ".eslintrc.js"
+  },
+  // Enable ESLint for both TS and JS files
+  "eslint.validate": ["javascript", "typescript"],
+
+  // Optional: override ESLint config path if you're using a custom location
+  // Uncomment and adjust if needed
+  // "eslint.options": {
+  //   "overrideConfigFile": "./config/.eslintrc.js"
+  // },
+
+  // Disable VSCode’s built-in JS validation (TS handles it + ESLint covers the rest)
+  "javascript.validate.enable": false,
+
+  // Use decorators without TypeScript warnings in JS (if needed)
+  "javascript.implicitProjectConfig.experimentalDecorators": true,
+
+  // Turn off TS checking in JS (if you’re mixing JS + decorators)
+  "javascript.implicitProjectConfig.checkJs": false,
+
+  // Format on save (optional, depending on prettier/eslint config)
+  "editor.formatOnSave": true,
+
+  // Disable unused import warnings from TS
+  "typescript.tsserver.experimental.enableProjectDiagnostics": false
+}

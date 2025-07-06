@@ -1,4 +1,9 @@
 {
+  "compilerOptions": {
+    // "outDir": "./dist",
+    // "rootDir": "./src",
+    "removeComments": true
+  },
   "extends": "./tsconfig.json",
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }
