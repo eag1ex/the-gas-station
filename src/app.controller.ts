@@ -12,6 +12,11 @@ export class AppController {
     return this.appService.getHello(); // returns a welcome message
   }
 
+  @Get('envs')
+  getEnvs() {
+    return this.appService.getEnvInfo(); // returns a welcome message
+  }
+
   @Post()
   createUser(@Body() dto: CreateUserDto) {
     return this.appService.create(dto);
