@@ -14,6 +14,8 @@ export class AppController {
 
   @Get('envs')
   getEnvs() {
+    // service for sensitive data is only available in dev env
+    if (process.env.ENV !== 'development') return {};
     return this.appService.getEnvInfo(); // returns a welcome message
   }
 

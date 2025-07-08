@@ -399,3 +399,15 @@ Temporary Items
 dist
 .webpack
 .serverless/**/*.zip
+
+
+# Ignore local SQLite database file
+prisma/*.db
+
+# Optional: ignore binary dumps or migration logs
+prisma/migrations/*/README.md
+
+
+# developer tests
+__temp
+.vscode

@@ -12,7 +12,7 @@ export class AppService {
   }
   getEnvInfo() {
     return {
-      env: this.config.get('NODE_ENV'),
+      env: this.config.get('ENV'),
       port: this.config.get<number>('PORT'),
     };
   }

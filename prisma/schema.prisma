@@ -1,0 +1,32 @@
+// schema.prisma
+// This file defines your database schema using Prisma's modeling language
+
+// -------------------
+// 1. Generator Block
+// -------------------
+generator client {
+  provider = "prisma-client-js" // Generates Prisma Client, which we use in our NestJS service
+}
+
+// -------------------
+// 2. Datasource Block
+// -------------------
+datasource db {
+  provider = "sqlite"                      // Use SQLite for local development / testing
+  url      = env("DATABASE_URL")          // URL is loaded from .env file (e.g., file:./dev.db)
+}
+
+// -------------------
+// 3. Models
+// -------------------
+// This defines a table called "Recipe", equivalent to your SQL `CREATE TABLE recipes`
+model Recipe {
+  id           Int      @id @default(autoincrement())     // Primary key, auto-incrementing integer
+  title        String                                    // Name of recipe (VARCHAR in SQL)
+  making_time  String                                    // How long it takes to prepare
+  serves       String                                    // Number of people the recipe serves
+  ingredients  String                                    // Ingredients list as a string
+  cost         Int                                       // Price of the recipe
+  created_at   DateTime  @default(now())                 // Timestamp when record is created
+  updated_at   DateTime  @updatedAt                      // Auto-updated on each change
+}

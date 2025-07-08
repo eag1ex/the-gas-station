@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
+import { RecipesModule } from './recipes/recipes.module';
 @Module({
   imports: [
     OrdersModule,
@@ -22,6 +23,7 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
       })(),
     }),
     ProductsModule,
+    RecipesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
