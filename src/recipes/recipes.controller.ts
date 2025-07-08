@@ -66,6 +66,8 @@ export class RecipesController {
   @HandleException(() => ({ message: API_MESSAGES.DELETE_NOT_FOUND }))
   async remove(@Param('id') id: string) {
     const recipe = await this.recipesService.remove(+id);
-    return wrapMessage(API_MESSAGES.DELETE_SUCCESS, recipe);
+    const d = wrapMessage(API_MESSAGES.DELETE_SUCCESS, recipe);
+    delete d?.recipe || {};
+    return d;
   }
 }
