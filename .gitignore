@@ -411,3 +411,7 @@ prisma/migrations/*/README.md
 # developer tests
 __temp
 .vscode
+__prisma
+/generated/prisma
+
+/generated/prisma
