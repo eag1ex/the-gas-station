@@ -6,9 +6,10 @@ import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { RecipesModule } from './recipes/recipes.module';
+import { PrismaModule } from './prisma/prisma.module'; // ✅ Import this
+
 @Module({
   imports: [
-    OrdersModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: (() => {
@@ -22,6 +23,8 @@ import { RecipesModule } from './recipes/recipes.module';
         }
       })(),
     }),
+    PrismaModule,
+    OrdersModule,
     ProductsModule,
     RecipesModule,
   ],
@@ -30,6 +33,6 @@ import { RecipesModule } from './recipes/recipes.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('*'); // Apply to all routes
+    consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }
