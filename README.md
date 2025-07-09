@@ -1,13 +1,18 @@
 ## Project: The Gas Station
 
-Nest.js typescript /api project
+NestJS TypeScript REST API
 
-### api calls
+### API Endpoints
+
+---
+
+### **\[POST] /recipes**
+
+Create a new recipe
+
+**Request Body:**
 
 ```json
-POST /recipes
-Content-Type: application/json
-
 {
   "title": "Tomato Soup",
   "making_time": "15 min",
@@ -15,34 +20,37 @@ Content-Type: application/json
   "ingredients": "onion, tomato, seasoning, water",
   "cost": 450
 }
-
-
 ```
 
+**Success Response:**
+
 ```json
-// expected response
 {
   "message": "Recipe successfully created!",
   "recipe": [
     {
-      "id": "3",
+      "id": 3,
       "title": "Tomato Soup",
       "making_time": "15 min",
       "serves": "5 people",
       "ingredients": "onion, tomato, seasoning, water",
-      "cost": "450",
-      "created_at": "2025-07-08 12:00:00",
-      "updated_at": "2025-07-08 12:00:00"
+      "cost": 450,
+      "created_at": "2025-07-08T12:00:00.000Z",
+      "updated_at": "2025-07-08T12:00:00.000Z"
     }
   ]
 }
 ```
 
-GET /recipes
+---
+
+### **\[GET] /recipes**
+
+Retrieve all recipes
+
+**Success Response:**
 
 ```json
-// Expected Response
-
 {
   "recipes": [
     {
@@ -51,18 +59,29 @@ GET /recipes
       "making_time": "45 min",
       "serves": "4 people",
       "ingredients": "onion, chicken, seasoning",
-      "cost": "1000"
+      "cost": 1000
     },
-    ...
+    {
+      "id": 2,
+      "title": "Rice Omelette",
+      "making_time": "30 min",
+      "serves": "2 people",
+      "ingredients": "onion, egg, seasoning, soy sauce",
+      "cost": 700
+    }
   ]
 }
-
 ```
 
-GET /recipes/{id}
+---
+
+### **\[GET] /recipes/{id}**
+
+Retrieve a recipe by ID
+
+**Success Response:**
 
 ```json
-// Expected Response:
 {
   "message": "Recipe details by id",
   "recipe": [
@@ -72,18 +91,21 @@ GET /recipes/{id}
       "making_time": "45 min",
       "serves": "4 people",
       "ingredients": "onion, chicken, seasoning",
-      "cost": "1000"
+      "cost": 1000
     }
   ]
 }
 ```
 
-PATCH /recipes/{id}
+---
 
-```
-PATCH /recipes/1
-Content-Type: application/json
+### **\[PATCH] /recipes/{id}**
 
+Update a recipe by ID
+
+**Request Body:**
+
+```json
 {
   "title": "Spicy Chicken Curry",
   "making_time": "50 min",
@@ -93,8 +115,9 @@ Content-Type: application/json
 }
 ```
 
+**Success Response:**
+
 ```json
-// Expected Response:
 {
   "message": "Recipe successfully updated!",
   "recipe": [
@@ -103,89 +126,177 @@ Content-Type: application/json
       "making_time": "50 min",
       "serves": "5 people",
       "ingredients": "onion, chicken, chili, seasoning",
-      "cost": "1100"
+      "cost": 1100
     }
   ]
 }
 ```
 
-DELETE /recipes/{id}
+---
+
+### **\[DELETE] /recipes/{id}**
+
+Delete a recipe by ID
+
+**Success Response:**
 
 ```json
-// Expected Response:
 {
   "message": "Recipe successfully removed!"
 }
+```
 
-//or
+**Failure Response:**
+
+```json
 {
   "message": "No recipe found"
 }
 ```
 
-### sql file migration to sqlite
+---
 
-npx prisma init
+## Migrating from `.sql` to SQLite (Prisma-Compatible)
 
-## the prisma/schema.prisma was generated but since we are using sqlite and specific database url, client and db need to be updated to:
+This guide walks through how to migrate traditional `.sql` schema to SQLite-compatible format for Prisma.
 
+---
+
+### 1. Create the `prisma/` Directory
+
+At your project root:
+
+```bash
+mkdir prisma
 ```
+
+---
+
+### 2. Create the `schema.prisma` File
+
+Inside created `prisma/` directory, create file named `schema.prisma` with following boilerplate:
+
+```prisma
 generator client {
-  provider = "prisma-client-js" // Generates Prisma Client, which we use in our NestJS service
+  provider = "prisma-client-js"
 }
 
-// -------------------
-// 2. Datasource Block
-// -------------------
 datasource db {
-  provider = "sqlite"                      // Use SQLite for local development / testing
-  url      = env("DATABASE_URL")          // URL is loaded from .env file (e.g., file:./dev.db)
+  provider = "sqlite"
+  url      = env("DATABASE_URL") // from your .env file (e.g., file:./dev.db)
 }
-
 ```
 
-sqlite3 prisma/dev.db < sql/create.sql
+---
 
-## before running this command,
+### 3. Prepare SQL File for SQLite
 
+**Run the SQL converter script:**
+
+```bash
+bash create_sqlite_file.sh
+```
+
+This generates compatible file at:
+
+```
+## sql/create.sql
+sql/create-sqlite.sql
+```
+
+---
+
+### 4. Create SQLite Database
+
+Run following to create SQLite database from your new `.sql` file:
+
+```bash
+sqlite3 prisma/dev.db < sql/create-sqlite.sql
+```
+
+---
+
+### 5. Generate Prisma Schema from SQLite
+
+Ensure your `.env` contains this line (relative to your `schema.prisma`):
+
+```env
+DATABASE_URL="file:./dev.db"
+```
+
+Now run:
+
+```bash
 npx prisma db pull
 
-1. run script to translate original create.sql to be compatible with sqlite
-   run the script: /$ bash create_sqlite_file.sh
+## or if you already have schema.prisma
+# npx prisma db push --schema=prisma/schema.prisma
+```
 
-- this will create compatible file `sql/create-sqlite.sql`
+> This introspects your database and populates `schema.prisma` with matching Prisma models.
 
-2. run database creation with this file
-   sqlite3 prisma/dev.db < sql/create-sqlite.sql
+---
 
-3. once the prisma folder is created we can no longer run /npx prisma init
+### 6. (Optional) Set Up Migrations
 
-and need to create it manualy
+If you want to enable migrations:
 
-schema.prisma
-`
-// prisma/schema.prisma
-generator client {
-provider = "prisma-client-js"
-}
-
-datasource db {
-provider = "sqlite"
-url = env("DATABASE_URL")
-}
-`
-
-4. make sure database is set inside your .env's
-   with `DATABASE_URL="file:./dev.db"` < relative to /schema.prisma dir
-
-5. next run /$ npx prisma db pull
-   this will update ./prisma/schema.prisma file and add `model recipes`
-
-6. optional migrations for dev or deploy (for production)
-
-npx prisma migrate dev
+```bash
+npx prisma migrate dev --name init
 npx prisma migrate deploy
+```
 
-7. this will update Client Prisma module `./node_modules/@prisma/client`
-   - this should alwasy run after migrate if you intend to use it, or running for initial time and dont need to run any migrations
-     /$ npx prisma generate
+---
+
+### 7. Generate the Prisma Client
+
+You must regenerate Prisma Client after every `db pull` or `migrate`:
+
+```bash
+npx prisma generate
+```
+
+This will update the generated client in:
+
+```
+./node_modules/@prisma/client
+```
+
+---
+
+### Summary:
+
+- `create_sqlite_file.sh` → converts original `.sql` to SQLite-compatible.
+- `sqlite3 prisma/dev.db < sql/create-sqlite.sql` → creates the actual SQLite DB.
+- `npx prisma db pull` → generates your `schema.prisma`.
+- `npx prisma generate` → updates Prisma client to match your schema.
+
+## Script execution order
+
+```json
+"scripts": {
+  // === Start scripts ===
+  "start": "npm run start:prod",                         // Default start (used by Heroku)
+  "start:prod": "node dist/main",                        // Starts production build
+  "start:local": "NODE_ENV=development nest start",      // Starts in local dev mode (no watch)
+  "start:dev": "nest start --watch",                     // Local dev with auto-restart
+  "start:local:prod": "NODE_ENV=production node dist/main.js", // Local prod-like start
+
+  // === Build scripts ===
+  "build": "nest build",                                 // Compiles the app
+  "heroku-postbuild": "npm run build",                   // Heroku hook: builds app
+
+  // === Prisma hooks ===
+  "postinstall": "npx prisma db push && npx prisma generate", // Runs on Heroku and locally after install
+  "generate:db": "npx prisma db push",                   // Manual DB push
+  "generate:client": "npx prisma generate",              // Manual Prisma Client gen
+
+  // === Dev tools ===
+  "lint": "eslint 'src/**/*.ts'",
+  "format": "prettier --write 'src/**/*.ts'",
+
+  // tests are incomplete
+  "test": "jest",
+  "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json"
+}
+```

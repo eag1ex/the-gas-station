@@ -41,7 +41,7 @@ export class RecipesController {
   async findAll() {
     const recipes = await this.recipesService.findAll();
     if (!recipes.length) {
-      return wrapMessage(API_MESSAGES.EMPTY);
+      return { message: API_MESSAGES.EMPTY, recipes: [] };
     }
     recipes.forEach((recipe) => {
       recipe.cost = recipe.cost.toString() as any;
@@ -57,7 +57,8 @@ export class RecipesController {
   @HandleException(() => ({ message: API_MESSAGES.GET_BY_ID_NOT_FOUND }))
   async findOne(@Param('id') id: string) {
     const recipe = await this.recipesService.findOne(+id);
-    if (!recipe) return { message: API_MESSAGES.GET_BY_ID_NOT_FOUND };
+    if (!recipe)
+      return { message: API_MESSAGES.GET_BY_ID_NOT_FOUND, recipe: [] };
     recipe.cost = recipe.cost.toString() as any;
     const r = excludeProps(recipe, ['created_at', 'updated_at']);
     const d = wrapMessage(API_MESSAGES.GET_BY_ID_SUCCESS, r, 'single');
