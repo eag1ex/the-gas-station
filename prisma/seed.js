@@ -6,13 +6,10 @@ async function main() {
   const count = await prisma.recipes.count();
   if (count === 0) {
     await prisma.recipes.createMany({ data: seedData });
+    console.log('seed data inserted successfully');
   }
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
 main()
   .catch(console.error)
   .finally(() => prisma.$disconnect());
