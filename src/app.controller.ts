@@ -5,11 +5,11 @@ import { PrismaService } from './prisma/prisma.service';
 export class AppController {
   constructor(private readonly prisma: PrismaService) {}
 
-  @Get()
-  @HttpCode(HttpStatus.OK)
-  getRoot() {
-    return { message: 'Hello World!' };
-  }
+  // @Get()
+  // @HttpCode(HttpStatus.OK)
+  // getRoot() {
+  //   return { message: 'Hello World!' };
+  // }
 
   /**
    * Health check endpoint: GET /ping

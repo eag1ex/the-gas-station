@@ -5,9 +5,21 @@ import { ConfigModule } from '@nestjs/config';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { RecipesModule } from './recipes/recipes.module';
 import { PrismaModule } from './prisma/prisma.module'; // ✅ Import this
-
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 @Module({
   imports: [
+    // for speed render static files from the public directory
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      exclude: ['/recipes*', '/recipes'], // your API endpoints remain untouched
+      serveRoot: '/', // Serve at root
+      serveStaticOptions: {
+        index: 'index.html', // Serve this file for "/"
+        extensions: ['html'],
+      },
+    }),
+
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: (() => {
