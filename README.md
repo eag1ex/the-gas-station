@@ -275,6 +275,21 @@ This will update the generated client in:
 
 ```json
 "scripts": {
+
+    // --- Heroku Build lifecycle ---
+  "build": "nest build", // Compiles to /dist
+  "heroku-postbuild": "npm run build", // Runs after dependencies are installed
+
+  // --- Prisma setup ---
+  "postinstall": "npx prisma db push && npx prisma generate", // Ensures DB and client are ready
+
+  // --- Start app ---
+  "start:prod": "node dist/main",
+  "start": "npm run start:prod"
+  //  --- Heroku Build end ---
+
+
+
   // === Start scripts ===
   "start": "npm run start:prod",                         // Default start (used by Heroku)
   "start:prod": "node dist/main",                        // Starts production build
@@ -299,4 +314,18 @@ This will update the generated client in:
   "test": "jest",
   "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json"
 }
+```
+
+## Heroku config
+
+Get familiar with the file: `heroku-setup-example.sh` it provides needed knowledge to deploy tp heroku
+
+**Config setting**
+
+```
+heroku config:set NODE_ENV=production
+##heroku config:set DATABASE_URL=file:./dev.db
+
+## or just run
+heroku config:set $(cat .env.prod | xargs)
 ```
