@@ -51,3 +51,28 @@ export class RecipeValidationFilter implements ExceptionFilter {
     });
   }
 }
+
+@Catch(BadRequestException)
+export class RecipeValidationFilterV2 implements ExceptionFilter {
+  catch(exception: BadRequestException, host: ArgumentsHost) {
+    const response = host.switchToHttp().getResponse();
+
+    const exceptionResponse = exception.getResponse();
+
+    const isValidationError =
+      typeof exceptionResponse === 'object' &&
+      exceptionResponse !== null &&
+      Array.isArray((exceptionResponse as any).message);
+
+    if (isValidationError) {
+      response.status(HttpStatus.OK).json({
+        message: API_MESSAGES.CREATE_FAILURE,
+        required: API_MESSAGES.REQUIRED_FIELDS,
+        error: 'Bad Request',
+      });
+    } else {
+      // For other BadRequestExceptions, fall back to default handling
+      response.status(HttpStatus.BAD_REQUEST).json(exceptionResponse);
+    }
+  }
+}

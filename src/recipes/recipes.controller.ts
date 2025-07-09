@@ -20,6 +20,7 @@ import {
 import {
   HandleException,
   RecipeValidationFilter,
+  RecipeValidationFilterV2,
 } from '../lib/decorators/handle-exception.decorator';
 import { excludeProps, sanitizeDto } from '../lib/utils';
 
@@ -29,7 +30,7 @@ export class RecipesController {
 
   @Post()
   @HttpCode(HttpStatus.OK)
-  @UseFilters(RecipeValidationFilter)
+  @UseFilters(RecipeValidationFilterV2)
   async create(@Body() dto: CreateRecipeDto) {
     const recipe = await this.recipesService.create(dto);
     return wrapMessage(API_MESSAGES.CREATE_SUCCESS, recipe, 'single');
