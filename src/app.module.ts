@@ -2,8 +2,6 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { OrdersModule } from './orders/orders.module';
-import { ProductsModule } from './products/products.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { RecipesModule } from './recipes/recipes.module';
 import { PrismaModule } from './prisma/prisma.module'; // ✅ Import this
@@ -24,8 +22,6 @@ import { PrismaModule } from './prisma/prisma.module'; // ✅ Import this
       })(),
     }),
     PrismaModule,
-    OrdersModule,
-    ProductsModule,
     RecipesModule,
   ],
   controllers: [AppController],

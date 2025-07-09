@@ -2,9 +2,15 @@
 
 import {
   Catch,
-  HttpException,
   InternalServerErrorException,
+  ExceptionFilter,
+  ArgumentsHost,
+  BadRequestException,
+  HttpStatus,
 } from '@nestjs/common';
+
+import { Response } from 'express';
+import { API_MESSAGES } from '../constants/api-messages.constant';
 
 export function HandleException(
   customHandler?: (e: any) => any,
@@ -30,4 +36,18 @@ export function HandleException(
 
     return descriptor;
   };
+}
+
+@Catch(BadRequestException)
+export class RecipeValidationFilter implements ExceptionFilter {
+  catch(_: BadRequestException, host: ArgumentsHost) {
+    const response = host.switchToHttp().getResponse<Response>();
+
+    response.status(HttpStatus.BAD_REQUEST).json({
+      message: API_MESSAGES.CREATE_FAILURE,
+      required: API_MESSAGES.REQUIRED_FIELDS,
+      error: 'Bad Request',
+      statusCode: 400,
+    });
+  }
 }

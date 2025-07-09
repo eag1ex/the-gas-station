@@ -13,10 +13,20 @@ export const API_MESSAGES = {
   REQUIRED_FIELDS: 'title, making_time, serves, ingredients, cost',
 };
 
-export function wrapMessage(message: string, recipe?: any) {
+export function wrapMessage(
+  message: string,
+  recipe?: any,
+  type: 'single' | 'list' = 'single',
+) {
   const payload: any = { message };
   if (recipe) {
-    payload.recipe = Array.isArray(recipe) ? recipe : [recipe];
+    // if this was payload.data then we could use as global wrapper for all controllers
+    // make sure recipe is an array always
+    if (type === 'single') {
+      payload.recipe = !Array.isArray(recipe) ? [recipe] : recipe;
+    } else if (type === 'list') {
+      payload.recipes = Array.isArray(recipe) ? recipe : [recipe];
+    }
   }
   return payload;
 }

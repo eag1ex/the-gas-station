@@ -1,20 +1,24 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, MaxLength } from 'class-validator';
 
 export class CreateRecipeDto {
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
   title: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
   making_time: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
   serves: string;
 
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
+  @MaxLength(300)
   ingredients: string;
 
   @IsNotEmpty()

@@ -9,20 +9,20 @@ export class RecipesService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: CreateRecipeDto) {
-    return this.prisma.recipe.create({ data });
+    return this.prisma.recipes.create({ data });
   }
 
   async findAll() {
-    return this.prisma.recipe.findMany();
+    return this.prisma.recipes.findMany();
   }
 
   async findOne(id: number) {
-    return this.prisma.recipe.findUnique({ where: { id } });
+    return this.prisma.recipes.findUnique({ where: { id } });
   }
 
   async update(id: number, data: UpdateRecipeDto) {
     try {
-      return await this.prisma.recipe.update({ where: { id }, data });
+      return await this.prisma.recipes.update({ where: { id }, data });
     } catch (error) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -36,7 +36,7 @@ export class RecipesService {
 
   async remove(id: number) {
     try {
-      return await this.prisma.recipe.delete({ where: { id } });
+      return await this.prisma.recipes.delete({ where: { id } });
     } catch (error) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&

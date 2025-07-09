@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  UseFilters,
 } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
@@ -16,7 +17,11 @@ import {
   API_MESSAGES,
   wrapMessage,
 } from '../lib/constants/api-messages.constant';
-import { HandleException } from '../lib/decorators/handle-exception.decorator';
+import {
+  HandleException,
+  RecipeValidationFilter,
+} from '../lib/decorators/handle-exception.decorator';
+import { excludeProps } from 'src/lib/utils';
 
 @Controller('recipes')
 export class RecipesController {
@@ -24,13 +29,10 @@ export class RecipesController {
 
   @Post()
   @HttpCode(HttpStatus.OK)
-  @HandleException(() => ({
-    message: API_MESSAGES.CREATE_FAILURE,
-    required: API_MESSAGES.REQUIRED_FIELDS,
-  }))
+  @UseFilters(RecipeValidationFilter)
   async create(@Body() dto: CreateRecipeDto) {
     const recipe = await this.recipesService.create(dto);
-    return wrapMessage(API_MESSAGES.CREATE_SUCCESS, recipe);
+    return wrapMessage(API_MESSAGES.CREATE_SUCCESS, recipe, 'list');
   }
 
   @Get()
@@ -41,7 +43,13 @@ export class RecipesController {
     if (!recipes.length) {
       return wrapMessage(API_MESSAGES.EMPTY);
     }
-    return wrapMessage(API_MESSAGES.GET_ALL_SUCCESS, recipes);
+    recipes.forEach((recipe) => {
+      recipe.cost = recipe.cost.toString() as any;
+      if (recipe.created_at) delete recipe.created_at;
+      if (recipe.updated_at) delete recipe.updated_at;
+    });
+    const d = wrapMessage(API_MESSAGES.GET_ALL_SUCCESS, recipes, 'list');
+    return d;
   }
 
   @Get(':id')
@@ -50,7 +58,10 @@ export class RecipesController {
   async findOne(@Param('id') id: string) {
     const recipe = await this.recipesService.findOne(+id);
     if (!recipe) return { message: API_MESSAGES.GET_BY_ID_NOT_FOUND };
-    return wrapMessage(API_MESSAGES.GET_BY_ID_SUCCESS, recipe);
+    recipe.cost = recipe.cost.toString() as any;
+    const r = excludeProps(recipe, ['created_at', 'updated_at']);
+    const d = wrapMessage(API_MESSAGES.GET_BY_ID_SUCCESS, r, 'single');
+    return d;
   }
 
   @Patch(':id')
@@ -58,7 +69,10 @@ export class RecipesController {
   @HandleException(() => ({ message: API_MESSAGES.GET_BY_ID_NOT_FOUND }))
   async update(@Param('id') id: string, @Body() dto: UpdateRecipeDto) {
     const recipe = await this.recipesService.update(+id, dto);
-    return wrapMessage(API_MESSAGES.UPDATE_SUCCESS, recipe);
+    recipe.cost = recipe.cost.toString() as any;
+    const r = excludeProps(recipe, ['id', 'created_at', 'updated_at']);
+    const d = wrapMessage(API_MESSAGES.UPDATE_SUCCESS, r, 'single');
+    return d;
   }
 
   @Delete(':id')
@@ -67,7 +81,7 @@ export class RecipesController {
   async remove(@Param('id') id: string) {
     const recipe = await this.recipesService.remove(+id);
     const d = wrapMessage(API_MESSAGES.DELETE_SUCCESS, recipe);
-    delete d?.recipe || {};
-    return d;
+    const n = excludeProps(d, ['recipes', 'recipe']);
+    return n;
   }
 }
