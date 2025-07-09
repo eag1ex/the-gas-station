@@ -348,5 +348,5 @@ heroku run "npm run seed"
 
 ## Common issues
 
-Im using SqLite ephemeral filesystem db, after heroku restarts the data is not persistent,
-which means if i execute `heroku run "npm run seed"` it will restart after that and data will be lost, we we need to include the seed part of the deployment to heroku >`"heroku-postbuild": "npm run build && && npm run seed",`< <- which is not how we do things on production, but for this test we will make exception.
+- Im using SqLite **ephemeral filesystem db**, after heroku restarts the data is not persistent,
+  which means if i execute `heroku run "npm run seed"` it will restart after that and data will be lost, we we need to include the seed part of the deployment to heroku >`"heroku-postbuild": "npm run build && && npm run seed",`< <- which is not how we do things on production, but for this test we will make exception.

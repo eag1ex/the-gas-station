@@ -10,7 +10,7 @@
     "start:local:prod": "NODE_ENV=production node dist/main.js",
     "build": "rimraf dist && nest build",
     "postinstall": "npx prisma db push && npx prisma generate",
-    "heroku-postbuild": "npm run build && && npm run seed",
+    "heroku-postbuild": "npm run build && npm run seed",
     "generate:db": "npx prisma db push",
     "generate:client": "npx prisma generate",
     "lint": "eslint 'src/**/*.ts'",
