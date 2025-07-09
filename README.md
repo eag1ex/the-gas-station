@@ -329,3 +329,19 @@ heroku config:set NODE_ENV=production
 ## or just run
 heroku config:set $(cat .env.prod | xargs)
 ```
+
+## Seed initial data
+
+To add initial data to our database when project is deployed to production we can run the see command
+
+```sh
+# drop local db
+npm run purge:db
+
+# local
+npm run seed
+
+# production on heroku
+heroku run npm run seed
+
+```
