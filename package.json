@@ -16,7 +16,12 @@
     "lint": "eslint 'src/**/*.ts'",
     "format": "prettier --write 'src/**/*.ts'",
     "test": "jest",
-    "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json"
+    "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json",
+    "seed": "npx prisma db seed",
+    "purge:db": "rm prisma/prod.db && npx prisma db push"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   },
   "engines": {
     "node": ">=20.0.0",

@@ -10,6 +10,7 @@ import { join } from 'path';
 @Module({
   imports: [
     // for speed render static files from the public directory
+    // It uses Express’s express.static() middleware under the hood :)
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
       exclude: ['/recipes*', '/recipes'], // your API endpoints remain untouched
