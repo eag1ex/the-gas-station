@@ -77,7 +77,7 @@ Retrieve all recipes
 
 ### **\[GET] /recipes/{id}**
 
-Retrieve a recipe by ID
+Retrieve a recipe by ID.
 
 **Success Response:**
 
