@@ -350,3 +350,12 @@ heroku run "npm run seed"
 
 - Im using SqLite **ephemeral filesystem db**, after heroku restarts the data is not persistent,
   which means if i execute `heroku run "npm run seed"` it will restart after that and data will be lost, we we need to include the seed part of the deployment to heroku >`"heroku-postbuild": "npm run build && && npm run seed",`< <- which is not how we do things on production, but for this test we will make exception..
+- when using curl it only takes my around 2s without any vpn:
+
+```sh
+curl -o /dev/null -s -w "\nHTTP Code: %{http_code}\nTotal Time: %{time_total} sec\n" https://the-gas-station-f459b848eef6.herokuapp.com/
+
+HTTP Code: 200
+Total Time: 2.504240 sec
+
+```

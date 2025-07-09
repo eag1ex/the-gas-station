@@ -4,22 +4,23 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { RecipesModule } from './recipes/recipes.module';
-import { PrismaModule } from './prisma/prisma.module'; // ✅ Import this
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
+import { PrismaModule } from './prisma/prisma.module';
+
+// import { ServeStaticModule } from '@nestjs/serve-static';
+// import { join } from 'path';
 @Module({
   imports: [
     // for speed render static files from the public directory
     // It uses Express’s express.static() middleware under the hood :)
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      exclude: ['/recipes*', '/recipes'], // your API endpoints remain untouched
-      serveRoot: '/', // Serve at root
-      serveStaticOptions: {
-        index: 'index.html', // Serve this file for "/"
-        extensions: ['html'],
-      },
-    }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, '..', 'public'),
+    //   exclude: ['/recipes*', '/recipes'],
+    //   serveRoot: '/',
+    //   serveStaticOptions: {
+    //     index: 'index.html',
+    //     extensions: ['html'],
+    //   },
+    // }),
 
     ConfigModule.forRoot({
       isGlobal: true,

@@ -1,15 +1,17 @@
-import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, Res } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
-
+import { Response } from 'express';
 @Controller()
 export class AppController {
   constructor(private readonly prisma: PrismaService) {}
 
-  // @Get()
-  // @HttpCode(HttpStatus.OK)
-  // getRoot() {
-  //   return { message: 'Hello World!' };
-  // }
+  @Get()
+  @HttpCode(200)
+  getRoot(@Res() res: Response) {
+    res.setHeader('Cache-Control', 'public, max-age=600');
+    res.setHeader('Content-Type', 'text/plain');
+    res.send('Welcome to The Gas Station API');
+  }
 
   /**
    * Health check endpoint: GET /ping
