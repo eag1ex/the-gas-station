@@ -30,11 +30,19 @@ export class RecipesController {
   @Post()
   @HttpCode(HttpStatus.OK)
   @UseFilters(RecipeValidationFilter)
-  async create(@Body() body: Partial<CreateRecipeDto>) {
-    const dto = sanitizeDto(CreateRecipeDto, body, { cost: 0 });
+  async create(@Body() dto: CreateRecipeDto) {
     const recipe = await this.recipesService.create(dto);
     return wrapMessage(API_MESSAGES.CREATE_SUCCESS, recipe, 'single');
   }
+
+  // @Post()
+  // @HttpCode(HttpStatus.OK)
+  // @UseFilters(RecipeValidationFilter)
+  // async create(@Body() body: Partial<CreateRecipeDto>) {
+  //   const dto = sanitizeDto(CreateRecipeDto, body, { cost: 0 });
+  //   const recipe = await this.recipesService.create(dto);
+  //   return wrapMessage(API_MESSAGES.CREATE_SUCCESS, recipe, 'single');
+  // }
 
   @Get()
   @HttpCode(HttpStatus.OK)
