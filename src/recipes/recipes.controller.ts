@@ -21,7 +21,7 @@ import {
   HandleException,
   RecipeValidationFilter,
 } from '../lib/decorators/handle-exception.decorator';
-import { excludeProps } from 'src/lib/utils';
+import { excludeProps, sanitizeDto } from '../lib/utils';
 
 @Controller('recipes')
 export class RecipesController {
@@ -30,7 +30,8 @@ export class RecipesController {
   @Post()
   @HttpCode(HttpStatus.OK)
   @UseFilters(RecipeValidationFilter)
-  async create(@Body() dto: CreateRecipeDto) {
+  async create(@Body() body: Partial<CreateRecipeDto>) {
+    const dto = sanitizeDto(CreateRecipeDto, body, { cost: 0 });
     const recipe = await this.recipesService.create(dto);
     return wrapMessage(API_MESSAGES.CREATE_SUCCESS, recipe, 'single');
   }
