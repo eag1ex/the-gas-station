@@ -1,3 +1,5 @@
+import { formatDate } from '../utils';
+
 // constants/api-messages.constant.ts
 export const API_MESSAGES = {
   HELLO: 'Hello world',
@@ -14,6 +16,13 @@ export const API_MESSAGES = {
   REQUIRED_FIELDS: 'title, making_time, serves, ingredients, cost',
 };
 
+const normalize = (recipe: any) => {
+  const result = { ...recipe };
+  if (result.created_at) result.created_at = formatDate(result.created_at);
+  if (result.updated_at) result.updated_at = formatDate(result.updated_at);
+  return result;
+};
+
 export function wrapMessage(
   message: string,
   recipe?: any,
@@ -21,6 +30,7 @@ export function wrapMessage(
 ) {
   const payload: any = { message };
   if (recipe) {
+    recipe = normalize(recipe);
     // if this was payload.data then we could use as global wrapper for all controllers
     // make sure recipe is an array always
     if (type === 'single') {

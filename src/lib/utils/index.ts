@@ -1,3 +1,6 @@
+// src/lib/utils/format-date.ts
+import * as moment from 'moment';
+
 /**
  * exclude properties from an object
  * @param obj
@@ -43,4 +46,8 @@ export function sanitizeDto<T extends object>(
   }
 
   return sanitized;
+}
+
+export function formatDate(date: Date | string): string {
+  return moment(date).format('YYYY-MM-DD HH:mm:ss');
 }
