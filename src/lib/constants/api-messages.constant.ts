@@ -29,18 +29,18 @@ export function wrapMessage(
   type: 'single' | 'list' = 'single',
 ) {
   const payload: any = { message };
+
   if (recipe) {
-    recipe = normalize(recipe);
-    // if this was payload.data then we could use as global wrapper for all controllers
-    // make sure recipe is an array always
     if (type === 'single') {
-      payload.recipe = !Array.isArray(recipe) ? [recipe] : recipe;
+      const normalized = normalize(recipe);
+      payload.recipe = Array.isArray(normalized) ? normalized : [normalized];
     } else if (type === 'list') {
-      payload.recipes = Array.isArray(recipe) ? recipe : [recipe];
+      const normalized = Array.isArray(recipe)
+        ? recipe.map((r) => normalize(r))
+        : [normalize(recipe)];
+      payload.recipes = normalized;
     }
   }
+
   return payload;
-}
-export function wrapList(recipeList: any[]) {
-  return { recipes: recipeList };
 }
