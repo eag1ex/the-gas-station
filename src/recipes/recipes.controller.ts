@@ -32,7 +32,7 @@ export class RecipesController {
   @UseFilters(RecipeValidationFilter)
   async create(@Body() dto: CreateRecipeDto) {
     const recipe = await this.recipesService.create(dto);
-    return wrapMessage(API_MESSAGES.CREATE_SUCCESS, recipe, 'list');
+    return wrapMessage(API_MESSAGES.CREATE_SUCCESS, recipe, 'single');
   }
 
   @Get()

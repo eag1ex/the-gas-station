@@ -1,5 +1,6 @@
 // constants/api-messages.constant.ts
 export const API_MESSAGES = {
+  HELLO: 'Hello world',
   EMPTY: 'No recipes found.',
   INVALID_ID: 'Invalid recipe ID',
   CREATE_SUCCESS: 'Recipe successfully created!',
