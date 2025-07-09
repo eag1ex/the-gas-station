@@ -318,11 +318,11 @@ This will update the generated client in:
 
 ## Heroku config
 
-Get familiar with the file: `heroku-setup-example.sh` it provides needed knowledge to deploy tp heroku
+Get familiar with the file: `heroku-setup-example.sh` it provides needed knowledge to deploy tp heroku.
 
 **Config setting**
 
-```
+```sh
 heroku config:set NODE_ENV=production
 ##heroku config:set DATABASE_URL=file:./dev.db
 

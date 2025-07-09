@@ -11,6 +11,7 @@ heroku git:remote -a your-app-name
 heroku buildpacks:set heroku/nodejs
 
 # 5. Create a Procfile to tell Heroku how to run your app
+## optional in ssome cases
 echo "web: npm run start:prod" > Procfile
 
 # 6. Commit any pending changes
@@ -23,7 +24,7 @@ git push heroku main
 # 8. Set required environment variables (from .env.production)
 heroku config:set ENV=production
 heroku config:set BASE_URL=https://your-app-name.herokuapp.com
-heroku config:set DATABASE_URL="file:./dev.db"
+heroku config:set DATABASE_URL="file:./prod.db"
 
 # 9. Remove PORT if previously set (Heroku provides it automatically)
 heroku config:unset PORT
