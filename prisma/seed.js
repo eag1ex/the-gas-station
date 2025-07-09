@@ -3,9 +3,10 @@ const prisma = new PrismaClient();
 const seedData = require('./seed-data');
 
 async function main() {
-  await prisma.recipes.createMany({
-    data: seedData,
-  });
+  const count = await prisma.recipes.count();
+  if (count === 0) {
+    await prisma.recipes.createMany({ data: seedData });
+  }
 }
 
 main().catch((e) => {
