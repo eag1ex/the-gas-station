@@ -5,10 +5,13 @@ This is a RESTful API built for "The Gas Station". The API manages a collection 
 ### How to run the project
 
 ```sh
+# install all packages
+npm i
 
+# start
 npm run dev
 
-# with watch
+# start with watch
 npm run dev:w
 
 # build for production
