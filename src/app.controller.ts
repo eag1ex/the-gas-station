@@ -16,15 +16,6 @@ export class AppController {
 
   /**
    * Health check endpoint: GET /ping
-   *
-   * WHY WE NEED THIS:
-   * - During deployment or automated testing
-   *   there's often check that expects API to respond quickly.
-   * - Heroku dynos can be slow to boot, and Prisma might not be ready yet,
-   *   which leads to false negatives in tests:
-   *     ❌  [Basic Case] API server: Accessing BASE_URL returns code 404 or times out.
-   *
-   * - This route performs simple raw query (`SELECT 1`) to confirm DB readiness.
    */
   @Get('ping')
   @HttpCode(HttpStatus.OK)

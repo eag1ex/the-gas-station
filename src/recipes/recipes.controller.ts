@@ -35,15 +35,6 @@ export class RecipesController {
     return wrapMessage(API_MESSAGES.CREATE_SUCCESS, recipe, 'single');
   }
 
-  // @Post()
-  // @HttpCode(HttpStatus.OK)
-  // @UseFilters(RecipeValidationFilter)
-  // async create(@Body() body: Partial<CreateRecipeDto>) {
-  //   const dto = sanitizeDto(CreateRecipeDto, body, { cost: 0 });
-  //   const recipe = await this.recipesService.create(dto);
-  //   return wrapMessage(API_MESSAGES.CREATE_SUCCESS, recipe, 'single');
-  // }
-
   @Get()
   @HttpCode(HttpStatus.OK)
   @HandleException()
