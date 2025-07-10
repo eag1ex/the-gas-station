@@ -2,6 +2,28 @@
 
 This is a RESTful API built for "The Gas Station". The API manages a collection of recipes, allowing users to create, read, update, and delete (CRUD) entries. It follows best practices for RESTful design and aims to be clean, consistent, and maintainable.
 
+### How to run the project
+
+```sh
+
+npm run dev
+
+# with watch
+npm run dev:w
+
+# build for production
+npm run build
+
+# purge database (check db file name!!)
+npm run purge:db
+
+# seed database
+npm run seed
+
+# deploy to heroku
+## follow instruction under `Heroku config and deploy`
+```
+
 ### 📌 Project Description
 
 The goal of this project is to implement a robust and standards-compliant REST API for managing recipe data. The API supports the following operations:
@@ -351,7 +373,7 @@ This will update the generated client in:
 }
 ```
 
-## Heroku config
+## Heroku config and deploy
 
 Get familiar with the file: `heroku-setup-example.sh` it provides needed knowledge to deploy tp heroku.
 
@@ -363,6 +385,9 @@ heroku config:set NODE_ENV=production
 
 ## or just run
 heroku config:set $(cat .env.prod | xargs)
+
+## push to heroku if your cli is already setup, done!
+git push heroku main
 ```
 
 ## Seed initial data
