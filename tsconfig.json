@@ -12,8 +12,18 @@
     "baseUrl": "./",
     "incremental": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    //  "rootDir": "./src",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/lib/*": ["src/lib/*"],
+      "@/pages/*": ["src/pages/*"],
+      "@/middleware/*": ["src/middleware/*"],
+      "@/recipes/*": ["src/recipes/*"],
+      "@/prisma/*": ["src/prisma/*"]
+    }
   },
+
   "include": ["src", ".eslintrc.js", "test/app.controller.spec.ts"],
   "exclude": ["node_modules"]
 }

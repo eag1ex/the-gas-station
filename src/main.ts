@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
@@ -19,9 +19,9 @@ async function bootstrap() {
   await app.listen(port);
 
   if (config.get('ENV') === 'development') {
-    console.log('PROJECT ENVS: ');
-    console.log(' ENV: ', config.get('ENV'));
-    console.log(' PORT: ', config.get('PORT'));
+    Logger.log('PROJECT ENVS: ');
+    Logger.log(' ENV: ', config.get('ENV'));
+    Logger.log(' PORT: ', config.get('PORT'));
   }
 }
 bootstrap();

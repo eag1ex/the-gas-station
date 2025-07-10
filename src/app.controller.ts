@@ -5,6 +5,7 @@ import { Response } from 'express';
 export class AppController {
   constructor(private readonly prisma: PrismaService) {}
 
+  /** Quick static call to BASE_URL */
   @Get()
   @HttpCode(200)
   getRoot(@Res() res: Response) {
@@ -19,13 +20,11 @@ export class AppController {
    * WHY WE NEED THIS:
    * - During deployment or automated testing
    *   there's often check that expects API to respond quickly.
-   * - Heroku dynos can be slow to boot, and Prisma might not be ready instantly,
+   * - Heroku dynos can be slow to boot, and Prisma might not be ready yet,
    *   which leads to false negatives in tests:
    *     ❌  [Basic Case] API server: Accessing BASE_URL returns code 404 or times out.
    *
    * - This route performs simple raw query (`SELECT 1`) to confirm DB readiness.
-   *   It ensures that the server AND database are both alive and responding.
-   * - Useful for uptime checks, CI/CD readiness checks, and general diagnostics.
    */
   @Get('ping')
   @HttpCode(HttpStatus.OK)

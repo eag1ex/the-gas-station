@@ -1,4 +1,3 @@
-// src/lib/utils/format-date.ts
 import * as moment from 'moment';
 
 /**
@@ -16,36 +15,6 @@ export function excludeProps<T extends Record<string, any>>(
     delete result[key];
   }
   return result;
-}
-
-export function sanitizeDto<T extends object>(
-  DtoClass: new () => T,
-  input: Partial<T>,
-  fallback: Partial<T> = {},
-): T {
-  const dtoInstance = new DtoClass();
-  const sanitized: any = {};
-
-  for (const key of Object.keys(dtoInstance) as (keyof T)[]) {
-    let value = input[key];
-
-    if (value === undefined || value === null || value === '') {
-      const fallbackValue = fallback[key];
-
-      // Dynamically infer fallback type based on DTO default
-      const baseType = typeof dtoInstance[key];
-
-      if (fallbackValue !== undefined) {
-        value = fallbackValue;
-      } else {
-        value = (baseType === 'number' ? 0 : '') as any;
-      }
-    }
-
-    sanitized[key] = value;
-  }
-
-  return sanitized;
 }
 
 export function formatDate(date: Date | string): string {

@@ -2,6 +2,7 @@ import { formatDate } from '../utils';
 
 // constants/api-messages.constant.ts
 export const API_MESSAGES = {
+  SERVICE_FAILURE: 'Service is currently unavailable. Please try again later.',
   HELLO: 'Hello world',
   EMPTY: 'No recipes found.',
   INVALID_ID: 'Invalid recipe ID',
