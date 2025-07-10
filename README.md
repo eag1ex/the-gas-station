@@ -377,6 +377,7 @@ npm run purge:db
 npm run seed
 
 # production on heroku
+## this approach doesnt work with ephemeral filesystem
 heroku run "npm run seed"
 
 ```
@@ -385,7 +386,8 @@ heroku run "npm run seed"
 
 - Im using SqLite **ephemeral filesystem db**, after heroku restarts the data is not persistent,
   which means if i execute `heroku run "npm run seed"` it will restart, and after data will be lost, we need to include the as seed part of deployment to heroku >`"heroku-postbuild": "npm run build && npm run seed",`< <- which is not how we do things on production, but for this test we will make exception..
-- When using curl it only takes my around 2s without any vpn:
+- The second test case fails because testing server takes too long to resolve static BASE_URL call
+  - When using curl it only takes me around 2s without any vpn:
 
 ```sh
 curl -o /dev/null -s -w "\nHTTP Code: %{http_code}\nTotal Time: %{time_total} sec\n" https://the-gas-station-f459b848eef6.herokuapp.com/
@@ -393,4 +395,44 @@ curl -o /dev/null -s -w "\nHTTP Code: %{http_code}\nTotal Time: %{time_total} se
 HTTP Code: 200
 Total Time: 2.504240 sec
 
+```
+
+## Test results output
+
+Score: 7/8
+
+```txt
+https://the-gas-station-f459b848eef6.herokuapp.com
+
+ok 1  [Basic Case] codecheck.yml: BASE_URL has a valid URL.
+
+not ok 2  [Basic Case] API server: Accessing BASE_URL returns code 404.
+
+  Error: Timeout of 6000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (/root/src/test/test.basic.js)
+
+      at listOnTimeout (internal/timers.js:557:17)
+
+      at processTimers (internal/timers.js:500:7)
+
+ok 3  [Basic Case] /POST recipes: Cannot create a recipe if the request doesn’t have all the required parameters.
+
+ok 4  [Basic Case] /POST recipes: Can create a recipe.
+
+ok 5  [Basic Case] /GET recipes: Can get all of the recipes.
+
+ok 6  [Basic Case] /GET/{id} recipe: Can get the recipe with the selected id.
+
+ok 7  [Basic Case] /PATCH/{id} recipe: Can update recipe.
+
+ok 8  [Basic Case] /DELETE/{id} recipe: Can delete recipe.
+
+# tests 8
+
+# pass 7
+
+# fail 1
+
+1..8
+
+exit_code = 1, reason = DONE
 ```
