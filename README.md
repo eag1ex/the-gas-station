@@ -1,8 +1,8 @@
-# The Gas Station Challenge - REST API
+## The Gas Station Challenge - REST API
 
 This is a RESTful API built for "The Gas Station". The API manages a collection of recipes, allowing users to create, read, update, and delete (CRUD) entries. It follows best practices for RESTful design and aims to be clean, consistent, and maintainable.
 
-## 📌 Project Description
+### 📌 Project Description
 
 The goal of this project is to implement a robust and standards-compliant REST API for managing recipe data. The API supports the following operations:
 
@@ -15,7 +15,7 @@ All endpoints return JSON-formatted responses and are validated against strict i
 
 ---
 
-## 🛠 Stack Used
+### 🛠 Stack Used
 
 - **Framework**: [NestJS](https://nestjs.com/) — A progressive Node.js framework for building efficient server-side applications.
 - **Language**: TypeScript
@@ -27,7 +27,7 @@ All endpoints return JSON-formatted responses and are validated against strict i
 
 ---
 
-## 🧱 Architecture
+### 🧱 Architecture
 
 - **Modular Structure**: Organized into feature-based modules (e.g., `recipes` module) using NestJS's modular architecture.
 - **Controller-Service Pattern**: Business logic is separated into services, while controllers handle routing and HTTP responses.
@@ -436,3 +436,7 @@ ok 8  [Basic Case] /DELETE/{id} recipe: Can delete recipe.
 
 exit_code = 1, reason = DONE
 ```
+
+#### Thank you
+
+Thanks for the opportunity to perform this test and the project!
