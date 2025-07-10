@@ -327,12 +327,14 @@ This will update the generated client in:
 
 
 
+
+
   // === Start scripts ===
-  "start": "npm run start:prod",                         // Default start (used by Heroku)
+  "start": "npm run prod",                         // Default start (used by Heroku)
   "start:prod": "node dist/main",                        // Starts production build
-  "start:local": "NODE_ENV=development nest start",      // Starts in local dev mode (no watch)
-  "start:dev": "nest start --watch",                     // Local dev with auto-restart
-  "start:local:prod": "NODE_ENV=production node dist/main.js", // Local prod-like start
+  "dev": "cross-env NODE_ENV=development nest start",      // Starts in local dev mode (no watch)
+  "dev:w": "nest start --watch",                     // Local dev with auto-restart
+  "prod": "cross-env NODE_ENV=production node dist/main.js", // Local prod-like start
 
   // === Build scripts ===
   "build": "nest build",                                 // Compiles the app
@@ -346,10 +348,6 @@ This will update the generated client in:
   // === Dev tools ===
   "lint": "eslint 'src/**/*.ts'",
   "format": "prettier --write 'src/**/*.ts'",
-
-  // tests are incomplete
-  "test": "jest",
-  "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json"
 }
 ```
 
