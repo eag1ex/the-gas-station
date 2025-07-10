@@ -27,6 +27,12 @@ npm run seed
 ## follow instruction under `Heroku config and deploy`
 ```
 
+**The .env file:**
+
+- project defaults to `.env` file set inside: `app.module.ts`
+- create/rename `.env` file from `example.env`,
+  - _tip_ run `npm run purge:db` it works with `dev.db` so leave as is.
+
 ### 📌 Project Description
 
 The goal of this project is to implement a robust and standards-compliant REST API for managing recipe data. The API supports the following operations:
