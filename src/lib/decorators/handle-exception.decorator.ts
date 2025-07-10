@@ -74,6 +74,10 @@ export class RecipeValidationFilterV2 implements ExceptionFilter {
   }
 }
 
+/**
+ * Make sure we are handling service errors independently of controller logic.
+ * @returns
+ */
 export function CatchServiceError() {
   return function (
     target: any,

@@ -18,6 +18,9 @@ async function bootstrap() {
   const port = config.get<number>('PORT') || 3000;
   await app.listen(port);
 
+  // Enable CORS
+  app.enableCors();
+
   if (config.get('ENV') === 'development') {
     Logger.log('PROJECT ENVS: ');
     Logger.log(' ENV: ', config.get('ENV'));

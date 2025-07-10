@@ -1,6 +1,43 @@
-## Project: The Gas Station
+# The Gas Station Challenge - REST API
 
-NestJS TypeScript REST API
+This is a RESTful API built for "The Gas Station". The API manages a collection of recipes, allowing users to create, read, update, and delete (CRUD) entries. It follows best practices for RESTful design and aims to be clean, consistent, and maintainable.
+
+## 📌 Project Description
+
+The goal of this project is to implement a robust and standards-compliant REST API for managing recipe data. The API supports the following operations:
+
+- Create a new recipe
+- Retrieve all recipes or a specific recipe by ID
+- Update an existing recipe
+- Delete a recipe
+
+All endpoints return JSON-formatted responses and are validated against strict input schemas. The system is designed to be lightweight, performant, and compatible with deployment platforms like Heroku.
+
+---
+
+## 🛠 Stack Used
+
+- **Framework**: [NestJS](https://nestjs.com/) — A progressive Node.js framework for building efficient server-side applications.
+- **Language**: TypeScript
+- **Database**: SQLite — lightweight and file-based, suitable for local and simple production use.
+- **ORM**: Prisma — modern TypeScript ORM for database access and schema management.
+- **Deployment**: Heroku — used for hosting the deployed version of the API.
+- **Validation**: class-validator / class-transformer — for validating request DTOs.
+- **Static Assets**: ServeStaticModule — to serve lightweight static content at the base route.
+
+---
+
+## 🧱 Architecture
+
+- **Modular Structure**: Organized into feature-based modules (e.g., `recipes` module) using NestJS's modular architecture.
+- **Controller-Service Pattern**: Business logic is separated into services, while controllers handle routing and HTTP responses.
+- **DTO Validation**: Incoming requests are validated via DTOs using declarative decorators.
+- **Global Exception Handling**: Custom filters manage validation errors and response formatting.
+- **Utility Layer**: Reusable helpers handle formatting and response wrapping.
+- **Stateless API**: Follows REST principles including statelessness, uniform interface, and layered architecture.
+- **Deployment-ready**: Includes scripts and configuration for Heroku deployment with Prisma database push and optional seeding.
+
+---
 
 ### API Endpoints
 
@@ -346,11 +383,11 @@ heroku run "npm run seed"
 
 ```
 
-## Common issues
+## Troubleshooting
 
 - Im using SqLite **ephemeral filesystem db**, after heroku restarts the data is not persistent,
-  which means if i execute `heroku run "npm run seed"` it will restart after that and data will be lost, we we need to include the seed part of the deployment to heroku >`"heroku-postbuild": "npm run build && && npm run seed",`< <- which is not how we do things on production, but for this test we will make exception..
-- when using curl it only takes my around 2s without any vpn:
+  which means if i execute `heroku run "npm run seed"` it will restart, and after data will be lost, we need to include the as seed part of deployment to heroku >`"heroku-postbuild": "npm run build && npm run seed",`< <- which is not how we do things on production, but for this test we will make exception..
+- When using curl it only takes my around 2s without any vpn:
 
 ```sh
 curl -o /dev/null -s -w "\nHTTP Code: %{http_code}\nTotal Time: %{time_total} sec\n" https://the-gas-station-f459b848eef6.herokuapp.com/

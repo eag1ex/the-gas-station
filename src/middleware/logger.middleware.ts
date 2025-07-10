@@ -9,7 +9,6 @@ export class LoggerMiddleware implements NestMiddleware {
     if (process.env.NODE_ENV === 'development') {
       Logger.log(`[${req.method}] ${req.originalUrl}`);
     }
-
     next();
   }
 }
