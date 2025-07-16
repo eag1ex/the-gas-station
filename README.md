@@ -1,4 +1,4 @@
-## The Gas Station Challenge - REST API
+## The Gas Station - REST API
 
 This is a RESTful API built for "The Gas Station". The API manages a collection of recipes, allowing users to create, read, update, and delete (CRUD) entries. It follows best practices for RESTful design and aims to be clean, consistent, and maintainable.
 
@@ -424,53 +424,9 @@ heroku run "npm run seed"
   - When using curl it only takes me around 2s without any vpn:
 
 ```sh
-curl -o /dev/null -s -w "\nHTTP Code: %{http_code}\nTotal Time: %{time_total} sec\n" https://the-gas-station-f459b848eef6.herokuapp.com/
+curl -o /dev/null -s -w "\nHTTP Code: %{http_code}\nTotal Time: %{time_total} sec\n" https://yourappname.herokuapp.com/
 
 HTTP Code: 200
 Total Time: 2.504240 sec
 
 ```
-
-## Test results output
-
-Score: 7/8
-
-```txt
-https://the-gas-station-f459b848eef6.herokuapp.com
-
-ok 1  [Basic Case] codecheck.yml: BASE_URL has a valid URL.
-
-not ok 2  [Basic Case] API server: Accessing BASE_URL returns code 404.
-
-  Error: Timeout of 6000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (/root/src/test/test.basic.js)
-
-      at listOnTimeout (internal/timers.js:557:17)
-
-      at processTimers (internal/timers.js:500:7)
-
-ok 3  [Basic Case] /POST recipes: Cannot create a recipe if the request doesn’t have all the required parameters.
-
-ok 4  [Basic Case] /POST recipes: Can create a recipe.
-
-ok 5  [Basic Case] /GET recipes: Can get all of the recipes.
-
-ok 6  [Basic Case] /GET/{id} recipe: Can get the recipe with the selected id.
-
-ok 7  [Basic Case] /PATCH/{id} recipe: Can update recipe.
-
-ok 8  [Basic Case] /DELETE/{id} recipe: Can delete recipe.
-
-# tests 8
-
-# pass 7
-
-# fail 1
-
-1..8
-
-exit_code = 1, reason = DONE
-```
-
-#### Thank you
-
-Thanks for the opportunity to perform this test and the project!
